@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant">
-<head>
+<html lang="zh-Hant"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>私誌 · Soulscribe</title>
@@ -8,7 +7,8 @@
     @font-face {
       font-family: "QIJIC";
       src: local("QIJIC"),
-           url("./fonts/qiji-display.woff2") format("woff2");
+           url("./fonts/qiji-display.woff2") format("woff2"),
+           url("./fonts/qiji-combo.ttf") format("truetype");
       font-display: swap;
     }
 
@@ -437,11 +437,18 @@
       background:
         linear-gradient(180deg, rgba(33, 16, 15, .32), rgba(4, 3, 2, 0) 42%),
         var(--obsidian);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(176, 139, 78, .42) rgba(4, 3, 2, .92);
     }
 
-    .content::-webkit-scrollbar { width: 4px; }
+    .content::-webkit-scrollbar { width: 5px; }
+    .content::-webkit-scrollbar-track {
+      background: rgba(4, 3, 2, .92);
+      border-left: 1px solid rgba(164, 126, 69, .14);
+    }
     .content::-webkit-scrollbar-thumb {
-      background: rgba(164, 126, 69, .28);
+      background: linear-gradient(180deg, rgba(213, 189, 140, .52), rgba(112, 78, 36, .42));
+      border-radius: 999px;
     }
 
     /* ──────────────────────────────────────────────
@@ -568,7 +575,7 @@
       width: 100%;
       border: 1px solid rgba(164, 126, 69, .22);
       border-radius: var(--radius);
-      color: #e6ce96;
+      color: #f0d99e;
       background: rgba(239, 224, 196, .035);
       outline: none;
       font-family: var(--font-ui);
@@ -589,7 +596,7 @@
 
     input::placeholder,
     textarea::placeholder {
-      color: rgba(230, 206, 150, .54);
+      color: rgba(240, 217, 158, .64);
     }
 
     input:focus,
@@ -701,7 +708,7 @@
        ────────────────────────────────────────────── */
     .question {
       padding: 16px;
-      color: #e6ce96;
+      color: #f0d99e;
       background: rgba(239, 224, 196, .028);
       border: 1px solid rgba(164, 126, 69, .24);
       border-radius: var(--radius);
@@ -709,6 +716,7 @@
       font-size: 14.5px;
       font-weight: 300;
       line-height: 1.9;
+      letter-spacing: .035em;
     }
 
     .response {
@@ -805,13 +813,21 @@
       border-top: 1px solid rgba(164, 126, 69, .18);
       border-bottom: 1px solid rgba(164, 126, 69, .18);
       border-radius: 0;
-      background: transparent;
+      background:
+        linear-gradient(180deg, transparent calc(100% - 1px), rgba(164, 126, 69, .075) 0) 0 8px / 100% 31px,
+        transparent;
       font-family: var(--font-user);
       font-size: 13.5px;
       line-height: 1.92;
     }
 
     .input-dock .actions { gap: 12px; }
+
+    .input-dock .small-button:not(.voice-button) {
+      border-color: rgba(164, 126, 69, .14);
+      background: transparent;
+      color: rgba(213, 189, 140, .56);
+    }
 
     .small-button {
       min-height: 34px;
@@ -829,7 +845,7 @@
 
     .voice-button {
       background: rgba(16, 11, 8, .74);
-      color: #d9c08b;
+      color: #e0c78f;
       border-color: rgba(188, 165, 121, .45);
     }
 
@@ -856,11 +872,12 @@
     }
 
     .entry p {
-      color: rgba(236, 216, 165, .94);
+      color: rgba(246, 226, 178, .98);
       font-family: var(--font-user);
       font-size: 13px;
       font-weight: 300;
       line-height: 2.05;
+      letter-spacing: .035em;
     }
 
     .entry-foot {
@@ -905,8 +922,8 @@
 
     .chapter.panel {
       background:
-        linear-gradient(180deg, rgba(234, 220, 194, .94), rgba(220, 202, 168, .92));
-      border-color: rgba(213, 189, 140, .42);
+        linear-gradient(180deg, rgba(212, 194, 156, .9), rgba(188, 168, 126, .86));
+      border-color: rgba(176, 139, 78, .38);
       padding: 22px 22px 18px;
     }
 
@@ -918,11 +935,12 @@
     .paragraph:last-child { border-bottom: 0; }
 
     .chapter.panel .paragraph p {
-      color: #2a2118;
+      color: #211810;
       font-family: var(--font-display);
       font-size: 13px;
       font-weight: 300;
       line-height: 2.05;
+      letter-spacing: .04em;
     }
 
     .paragraph .small-button {
@@ -1005,17 +1023,21 @@
        ────────────────────────────────────────────── */
     .capsule-grid {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .capsule-option {
-      min-height: 96px;
+      min-height: 90px;
       display: grid;
       align-content: space-between;
       gap: 8px;
-      padding: 16px;
+      padding: 14px 0 13px;
       text-align: left;
       color: rgba(234, 220, 194, .82);
+      border-width: 0 0 1px;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .capsule-option strong {
@@ -1032,8 +1054,15 @@
     }
 
     .capsule-option.active {
-      background: rgba(164, 126, 69, .13);
-      border-color: rgba(213, 189, 140, .42);
+      background: linear-gradient(90deg, rgba(164, 126, 69, .11), transparent 72%);
+      border-color: rgba(213, 189, 140, .48);
+      padding-left: 12px;
+    }
+
+    [data-action="toggle-advanced"] {
+      background: transparent;
+      border-color: rgba(164, 126, 69, .16);
+      color: rgba(213, 189, 140, .56);
     }
 
     .switch-row {
@@ -1261,7 +1290,20 @@
       </span>
     </aside>
 
-    <div id="app" class="prototype relative" aria-live="polite"></div>
+    <div id="app" class="prototype relative" aria-live="polite">
+        <section class="screen quiet-screen fade">
+          <div class="brandline">
+            <div class="brandmark">誌</div>
+            <small>Private Archive · Soulscribe</small>
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">私誌</p>
+            <h1>寫給自己。<br>存於無聲之地。</h1>
+            <p class="tagline">此處只記你願意留下的真話。</p>
+          </div>
+          <button class="primary" data-action="start">開始</button>
+        </section>
+      </div>
 
     <aside class="spine spine-right" aria-hidden="true">
       <span class="spine-word">
@@ -2005,5 +2047,6 @@
 
     render();
   </script>
-</body>
-</html>
+
+
+</body></html>
