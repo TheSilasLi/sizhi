@@ -1,0 +1,1998 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>私誌 · Soulscribe</title>
+  <style>
+    @font-face {
+      font-family: "QIJIC";
+      src: local("QIJIC"), url("./fonts/qiji-combo.ttf") format("truetype");
+      font-display: swap;
+    }
+
+    /* EB Garamond — 邊題、書脊、英文檔案標識 */
+    @font-face {
+      font-family: "EB Garamond";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/ebgaramond/v30/SlGDmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7e8QL98ouZuYRzPZcwx.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    @font-face {
+      font-family: "EB Garamond";
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url("https://fonts.gstatic.com/s/ebgaramond/v30/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7e8QL98ouZuQxFPYcQO.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* ──────────────────────────────────────────────
+       單一權威配色 · haute private archive
+       ────────────────────────────────────────────── */
+    :root {
+      --obsidian: #040302;
+      --black: #100b08;
+      --noir: #17100c;
+      --wine: #21100f;
+      --paper: #d8c7aa;
+      --paper-deep: #c6b18d;
+      --ink: #211912;
+      --muted: #8a7b63;
+      --muted-dark: #9d8d74;
+      --line: rgba(158, 122, 67, .26);
+      --line-strong: rgba(176, 139, 78, .48);
+      --champagne: #a47e45;
+      --champagne-pale: #d5bd8c;
+      --oxblood: #652421;
+      --white: #efe0c4;
+      --shadow: 0 42px 110px rgba(0, 0, 0, .58);
+      --radius: 2px;
+
+      --font-display: "QIJIC", "SoulscribeJinxuan", "jf 金萱", "jf金萱",
+        "Jin Xuan", "JinXuan", "金萱", "Noto Serif TC", "Songti TC",
+        "PMingLiU", serif;
+      --font-ui: "Noto Serif TC", "Songti TC", "PMingLiU",
+        "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-brand: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+      --font-spine: "EB Garamond", "Cormorant Garamond", "Garamond",
+        "Adobe Garamond Pro", "Hoefler Text", "Baskerville", "Times New Roman",
+        serif;
+      color-scheme: dark;
+    }
+
+    *, ::before, ::after {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      color: var(--white);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 300;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      background:
+        linear-gradient(90deg, rgba(164, 126, 69, .05) 1px, transparent 1px) 0 0 / 96px 96px,
+        linear-gradient(0deg, rgba(164, 126, 69, .035) 1px, transparent 1px) 0 0 / 96px 96px,
+        radial-gradient(ellipse at 50% 30%, #0a0604 0%, #020201 70%);
+    }
+
+    button, input, textarea {
+      font: inherit;
+      font-weight: 300;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .54;
+    }
+
+    /* ──────────────────────────────────────────────
+       桌面裝幀框 · 劇院暗場
+       ────────────────────────────────────────────── */
+    .stage {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+    }
+
+    .prototype {
+      width: min(100%, 408px);
+      height: min(860px, calc(100vh - 48px));
+      max-height: 900px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--obsidian);
+      border: 1px solid rgba(184, 145, 82, .62);
+      border-radius: 0;
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(239, 224, 196, .08);
+      position: relative;
+    }
+
+    /* ──────────────────────────────────────────────
+       屏幕容器
+       ────────────────────────────────────────────── */
+    .screen {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      color: var(--white);
+      background:
+        linear-gradient(180deg, rgba(33, 16, 15, .22), transparent 32%),
+        var(--obsidian);
+    }
+
+    .quiet-screen {
+      justify-content: space-between;
+      padding: 32px 26px 28px;
+      background:
+        linear-gradient(180deg, rgba(96, 54, 35, .2), transparent 30%),
+        linear-gradient(0deg, rgba(164, 126, 69, .06), transparent 42%),
+        #060403;
+    }
+
+    /* ──────────────────────────────────────────────
+       品牌標識
+       ────────────────────────────────────────────── */
+    .brandmark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(188, 165, 121, .64);
+      border-radius: 50%;
+      color: #d0b982;
+      font-family: var(--font-brand);
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1;
+      box-shadow: inset 0 0 0 1px rgba(188, 165, 121, .16);
+    }
+
+    .brandline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brandline small,
+    .eyebrow,
+    .meta {
+      color: #b49a68;
+      font-family: var(--font-ui);
+      font-size: 9.5px;
+      line-height: 1.6;
+      text-transform: none;
+    }
+
+    .quiet-screen .brandline small,
+    .quiet-screen .eyebrow {
+      color: var(--champagne);
+    }
+
+    .hero-copy {
+      margin: auto 0;
+      padding: 38px 0 34px;
+      border-top: 1px solid rgba(164, 126, 69, .3);
+      border-bottom: 1px solid rgba(164, 126, 69, .3);
+    }
+
+    /* ──────────────────────────────────────────────
+       排印
+       ────────────────────────────────────────────── */
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1, h2, .serif {
+      font-family: var(--font-display);
+      font-weight: 300;
+    }
+
+    h1 {
+      color: #ecd8a5;
+      font-size: 28px;
+      line-height: 1.44;
+    }
+
+    h2 {
+      color: #eadcc2;
+      font-size: 20px;
+      line-height: 1.42;
+    }
+
+    h3 {
+      color: #eadcc2;
+      font-size: 12.5px;
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .tagline {
+      margin-top: 20px;
+      color: rgba(236, 216, 165, .78);
+      font-size: 12px;
+      line-height: 1.95;
+    }
+
+    /* ──────────────────────────────────────────────
+       按鈕
+       ────────────────────────────────────────────── */
+    .primary, .secondary, .ghost, .danger,
+    .tab, .choice, .segmented button, .icon-button, .small-button {
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-family: var(--font-ui);
+      font-weight: 300;
+      transition: background-color .2s ease, border-color .2s ease,
+                  color .2s ease, transform .16s ease;
+    }
+
+    .primary:active, .secondary:active, .ghost:active,
+    .choice:active, .tab:active, .icon-button:active,
+    .small-button:active {
+      transform: translateY(1px);
+    }
+
+    .primary, .secondary, .ghost, .danger,
+    .choice, .segmented button {
+      min-height: 39px;
+    }
+
+    .primary {
+      width: 100%;
+      background: rgba(16, 11, 8, .74);
+      color: #d9c08b;
+      border: 1px solid rgba(188, 165, 121, .45);
+      padding: 11px 16px;
+    }
+
+    .primary:not(:disabled):hover {
+      background: rgba(164, 126, 69, .14);
+      border-color: rgba(213, 189, 140, .58);
+    }
+
+    .secondary {
+      background: rgba(164, 126, 69, .86);
+      color: #110c08;
+      border: 1px solid rgba(234, 220, 194, .18);
+      padding: 10px 14px;
+    }
+
+    .secondary:hover {
+      background: rgba(178, 141, 84, .96);
+    }
+
+    .ghost {
+      background: rgba(239, 224, 196, .025);
+      color: rgba(234, 220, 194, .72);
+      border: 1px solid rgba(164, 126, 69, .22);
+      padding: 9px 14px;
+    }
+
+    .ghost:hover {
+      color: var(--champagne-pale);
+      border-color: rgba(213, 189, 140, .48);
+    }
+
+    .danger {
+      background: rgba(101, 36, 33, .12);
+      color: #c98a87;
+      border: 1px solid rgba(101, 36, 33, .42);
+      padding: 10px 14px;
+    }
+
+    /* ──────────────────────────────────────────────
+       App 頂部
+       ────────────────────────────────────────────── */
+    .app-top {
+      height: 64px;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(164, 126, 69, .34);
+      background: rgba(7, 5, 4, .96);
+    }
+
+    .app-name {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .app-name .brandmark {
+      width: 32px;
+      height: 32px;
+      font-size: 13px;
+    }
+
+    .app-title {
+      min-width: 0;
+    }
+
+    .app-title strong {
+      display: block;
+      color: #eadcc2;
+      font-family: var(--font-brand);
+      font-weight: 300;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .app-title span {
+      display: block;
+      color: rgba(234, 220, 194, .5);
+      font-size: 9.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon-button {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      background: transparent;
+      color: var(--champagne-pale);
+      border: 1px solid rgba(188, 165, 121, .42);
+    }
+
+    .icon-button:hover {
+      border-color: rgba(213, 189, 140, .68);
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+      position: relative;
+    }
+
+    .icon-sliders::before,
+    .icon-sliders::after,
+    .icon-sliders span {
+      content: "";
+      position: absolute;
+      left: 1px;
+      right: 1px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .icon-sliders::before { top: 4px; }
+    .icon-sliders span { top: 9px; }
+    .icon-sliders::after { top: 14px; }
+
+    .icon-sliders i,
+    .icon-sliders b,
+    .icon-sliders em {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: var(--obsidian);
+      transform: translateY(-50%);
+    }
+
+    .icon-sliders i { left: 4px; top: 4px; }
+    .icon-sliders b { right: 4px; top: 9px; }
+    .icon-sliders em { left: 7px; top: 14px; }
+
+    .icon-close::before,
+    .icon-close::after {
+      content: "";
+      position: absolute;
+      left: 1px;
+      top: 8px;
+      width: 16px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .icon-close::before { transform: rotate(45deg); }
+    .icon-close::after { transform: rotate(-45deg); }
+
+    /* ──────────────────────────────────────────────
+       主內容區
+       ────────────────────────────────────────────── */
+    .content {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 20px 22px 24px;
+      background:
+        linear-gradient(180deg, rgba(33, 16, 15, .32), rgba(4, 3, 2, 0) 42%),
+        var(--obsidian);
+    }
+
+    .content::-webkit-scrollbar { width: 4px; }
+    .content::-webkit-scrollbar-thumb {
+      background: rgba(164, 126, 69, .28);
+    }
+
+    /* ──────────────────────────────────────────────
+       底部導航
+       ────────────────────────────────────────────── */
+    .bottom-nav {
+      height: 62px;
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      padding: 8px 10px 10px;
+      background: rgba(7, 5, 4, .98);
+      border-top: 1px solid rgba(164, 126, 69, .34);
+    }
+
+    .tab {
+      background: transparent;
+      color: rgba(234, 220, 194, .48);
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      font-size: 9.5px;
+      padding: 6px;
+    }
+
+    .tab:hover {
+      color: rgba(234, 220, 194, .82);
+    }
+
+    .tab .mark {
+      width: 17px;
+      height: 16px;
+      margin: 0 auto;
+      display: block;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .tab[data-tab="record"] .mark::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      bottom: 3px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    .tab[data-tab="chapters"] .mark::before,
+    .tab[data-tab="chapters"] .mark::after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      right: 3px;
+      height: 1.5px;
+      background: currentColor;
+    }
+    .tab[data-tab="chapters"] .mark::before { top: 5px; }
+    .tab[data-tab="chapters"] .mark::after { top: 10px; }
+
+    .tab[data-tab="capsule"] .mark {
+      border-radius: 50% 50% 2px 2px;
+    }
+
+    .tab.active {
+      color: var(--champagne-pale);
+      background: rgba(164, 126, 69, .10);
+    }
+
+    /* ──────────────────────────────────────────────
+       流程頁（註冊、考古）
+       ────────────────────────────────────────────── */
+    .flow {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 26px 26px 24px;
+      gap: 24px;
+      background:
+        linear-gradient(180deg, rgba(33, 16, 15, .24), transparent 42%),
+        var(--obsidian);
+    }
+
+    .flow-head {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .step-dots i {
+      width: 22px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .step-dots i.active {
+      background: var(--champagne);
+    }
+
+    /* ──────────────────────────────────────────────
+       表單元素
+       ────────────────────────────────────────────── */
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    label {
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(164, 126, 69, .22);
+      border-radius: var(--radius);
+      color: #e6ce96;
+      background: rgba(239, 224, 196, .035);
+      outline: none;
+      font-family: var(--font-ui);
+      font-weight: 300;
+    }
+
+    input {
+      height: 44px;
+      padding: 0 13px;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+      padding: 12px 13px;
+      line-height: 1.78;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(230, 206, 150, .54);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(213, 189, 140, .58);
+      background: rgba(239, 224, 196, .055);
+      box-shadow: 0 0 0 2px rgba(164, 126, 69, .16);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .actions > * { flex: 1; }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    /* ──────────────────────────────────────────────
+       面板 / 條目 / 選項
+       ────────────────────────────────────────────── */
+    .panel,
+    .choice,
+    .capsule-option {
+      border: 1px solid rgba(164, 126, 69, .22);
+      border-radius: var(--radius);
+      background: rgba(239, 224, 196, .035);
+      box-shadow: inset 0 0 0 1px rgba(239, 224, 196, .018);
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel.tint {
+      background:
+        linear-gradient(180deg, rgba(239, 224, 196, .052), rgba(239, 224, 196, .028)),
+        var(--noir);
+      border-color: rgba(164, 126, 69, .32);
+    }
+
+    .panel.tint h2,
+    .panel.tint h3 {
+      color: #eadcc2;
+    }
+
+    .key-box {
+      padding: 14px;
+      border: 1px solid rgba(164, 126, 69, .28);
+      border-radius: var(--radius);
+      background: rgba(164, 126, 69, .055);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: rgba(234, 220, 194, .72);
+      line-height: 1.75;
+      word-break: break-word;
+      font-size: 11.5px;
+    }
+
+    .notice {
+      border-left: 2px solid var(--champagne);
+      padding: 10px 13px;
+      background: rgba(164, 126, 69, .065);
+      color: rgba(234, 220, 194, .76);
+      font-size: 11.5px;
+      line-height: 1.78;
+    }
+
+    .choices {
+      display: grid;
+      gap: 12px;
+    }
+
+    .choice {
+      width: 100%;
+      padding: 16px;
+      text-align: left;
+      color: rgba(234, 220, 194, .82);
+      min-height: auto;
+    }
+
+    .choice strong {
+      display: block;
+      font-size: 13.5px;
+      margin-bottom: 6px;
+      color: #eadcc2;
+      font-family: var(--font-display);
+      font-weight: 300;
+    }
+
+    .choice span {
+      display: block;
+      color: rgba(234, 220, 194, .52);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .choice:hover,
+    .choice.selected {
+      background: rgba(164, 126, 69, .13);
+      border-color: rgba(213, 189, 140, .42);
+    }
+
+    /* ──────────────────────────────────────────────
+       引導問題 / 回應
+       ────────────────────────────────────────────── */
+    .question {
+      padding: 16px;
+      color: #e6ce96;
+      background: rgba(239, 224, 196, .028);
+      border: 1px solid rgba(164, 126, 69, .24);
+      border-radius: var(--radius);
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .response {
+      min-height: 24px;
+      color: rgba(234, 220, 194, .48);
+      font-family: var(--font-display);
+      font-size: 12px;
+      line-height: 1.6;
+      transition: opacity .3s ease;
+    }
+
+    .response.empty { opacity: 0; }
+
+    /* ──────────────────────────────────────────────
+       Tab 切換器（引導/自述）
+       ────────────────────────────────────────────── */
+    .segmented {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 28px;
+      padding: 0 0 12px;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(164, 126, 69, .22);
+      border-radius: 0;
+    }
+
+    .segmented button {
+      background: transparent;
+      color: rgba(234, 220, 194, .46);
+      min-height: 28px;
+      padding: 0 0 4px;
+      text-align: left;
+      border-radius: 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    .segmented button:hover {
+      color: rgba(234, 220, 194, .76);
+    }
+
+    .segmented button.active {
+      color: #d9c08b;
+      border-bottom-color: rgba(217, 192, 139, .62);
+    }
+
+    .prompt-line {
+      display: grid;
+      gap: 8px;
+      padding: 4px 0 2px;
+      border-bottom: 1px solid rgba(164, 126, 69, .16);
+    }
+
+    .prompt-line .question {
+      padding: 4px 0 10px 14px;
+      border: 0;
+      border-left: 1px solid rgba(217, 192, 139, .42);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .prompt-line .actions {
+      gap: 18px;
+      padding: 2px 0 12px 14px;
+    }
+
+    .prompt-line .actions .ghost {
+      min-height: 26px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: rgba(213, 189, 140, .54);
+      text-align: left;
+      font-size: 11.5px;
+    }
+
+    .prompt-line .actions .ghost:hover {
+      color: var(--champagne-pale);
+    }
+
+    /* ──────────────────────────────────────────────
+       輸入區
+       ────────────────────────────────────────────── */
+    .input-dock {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .input-dock textarea {
+      min-height: 96px;
+      padding: 14px 2px;
+      border: 0;
+      border-top: 1px solid rgba(164, 126, 69, .18);
+      border-bottom: 1px solid rgba(164, 126, 69, .18);
+      border-radius: 0;
+      background: transparent;
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      line-height: 1.92;
+    }
+
+    .input-dock .actions { gap: 12px; }
+
+    .small-button {
+      min-height: 34px;
+      background: transparent;
+      color: rgba(234, 220, 194, .72);
+      border: 1px solid rgba(164, 126, 69, .22);
+      padding: 7px 10px;
+      font-size: 11.5px;
+    }
+
+    .small-button:hover {
+      color: var(--champagne-pale);
+      border-color: rgba(213, 189, 140, .48);
+    }
+
+    .voice-button {
+      background: rgba(16, 11, 8, .74);
+      color: #d9c08b;
+      border-color: rgba(188, 165, 121, .45);
+    }
+
+    .voice-button.listening {
+      background: rgba(164, 126, 69, .26);
+      color: #f1dcae;
+      border-color: rgba(213, 189, 140, .68);
+    }
+
+    /* ──────────────────────────────────────────────
+       條目列表
+       ────────────────────────────────────────────── */
+    .entry-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid rgba(164, 126, 69, .2);
+      margin-top: 4px;
+    }
+
+    .entry {
+      padding: 22px 0 18px;
+      border-bottom: 1px solid rgba(164, 126, 69, .15);
+      background: transparent;
+    }
+
+    .entry p {
+      color: rgba(236, 216, 165, .94);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 2.05;
+    }
+
+    .entry-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      color: rgba(213, 189, 140, .5);
+      font-family: var(--font-ui);
+      font-size: 9.8px;
+    }
+
+    .entry .small-button {
+      min-height: 24px;
+      padding: 0 4px;
+      border: 0;
+      color: rgba(213, 189, 140, .48);
+      background: transparent;
+      font-size: 10px;
+    }
+
+    .entry .small-button:hover {
+      color: var(--champagne-pale);
+    }
+
+    /* ──────────────────────────────────────────────
+       篇章
+       ────────────────────────────────────────────── */
+    .chapter-title {
+      display: grid;
+      gap: 7px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(164, 126, 69, .42);
+    }
+
+    .chapter-body {
+      display: grid;
+      gap: 4px;
+      padding: 4px 0;
+    }
+
+    .chapter.panel {
+      background:
+        linear-gradient(180deg, rgba(234, 220, 194, .94), rgba(220, 202, 168, .92));
+      border-color: rgba(213, 189, 140, .42);
+      padding: 22px 22px 18px;
+    }
+
+    .paragraph {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(42, 33, 24, .14);
+    }
+
+    .paragraph:last-child { border-bottom: 0; }
+
+    .chapter.panel .paragraph p {
+      color: #2a2118;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 2.05;
+    }
+
+    .paragraph .small-button {
+      margin-top: 12px;
+      color: rgba(42, 33, 24, .52);
+      border-color: rgba(42, 33, 24, .18);
+    }
+
+    .paragraph .small-button:hover {
+      color: rgba(42, 33, 24, .82);
+      border-color: rgba(42, 33, 24, .42);
+    }
+
+    .chapter-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .quote {
+      margin-top: 10px;
+      color: rgba(234, 220, 194, .58);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-style: italic;
+      line-height: 1.75;
+    }
+
+    /* "再說幾句" 等待態 */
+    .chapter-empty {
+      padding: 38px 18px;
+      text-align: center;
+      border: 1px dashed rgba(164, 126, 69, .28);
+      border-radius: var(--radius);
+    }
+
+    .chapter-empty .meta {
+      margin-top: 14px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: rgba(234, 220, 194, .68);
+    }
+
+    /* 生成等待覆蓋層 */
+    .waiting {
+      padding: 42px 22px;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(239, 224, 196, .045), rgba(239, 224, 196, .02)),
+        var(--noir);
+      border: 1px solid rgba(164, 126, 69, .32);
+      border-radius: var(--radius);
+    }
+
+    .waiting .waiting-line {
+      color: rgba(234, 220, 194, .68);
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      line-height: 1.85;
+    }
+
+    .waiting .waiting-quote {
+      margin-top: 22px;
+      color: rgba(234, 220, 194, .42);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 12px;
+      line-height: 1.85;
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: .42; }
+      50% { opacity: .78; }
+    }
+
+    /* ──────────────────────────────────────────────
+       時間膠囊
+       ────────────────────────────────────────────── */
+    .capsule-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .capsule-option {
+      min-height: 96px;
+      display: grid;
+      align-content: space-between;
+      gap: 8px;
+      padding: 16px;
+      text-align: left;
+      color: rgba(234, 220, 194, .82);
+    }
+
+    .capsule-option strong {
+      font-size: 13.5px;
+      color: #eadcc2;
+      font-family: var(--font-display);
+      font-weight: 300;
+    }
+
+    .capsule-option span {
+      color: rgba(234, 220, 194, .52);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .capsule-option.active {
+      background: rgba(164, 126, 69, .13);
+      border-color: rgba(213, 189, 140, .42);
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .switch-row:last-child { border-bottom: 0; }
+
+    .switch {
+      width: 44px;
+      height: 24px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: rgba(164, 126, 69, .26);
+      position: relative;
+      cursor: pointer;
+      border: 0;
+      transition: background-color .22s ease;
+    }
+
+    .switch::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      border-radius: 50%;
+      background: rgba(234, 220, 194, .86);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .42);
+      transition: left .22s ease, background-color .22s ease;
+    }
+
+    .switch.on {
+      background: var(--champagne);
+    }
+
+    .switch.on::after {
+      left: 23px;
+      background: #fff8ed;
+    }
+
+    /* ──────────────────────────────────────────────
+       設置 Sheet
+       ────────────────────────────────────────────── */
+    .sheet {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      color: #eadcc2;
+      background:
+        linear-gradient(180deg, rgba(33, 16, 15, .22), transparent 34%),
+        var(--obsidian);
+    }
+
+    .relative { position: relative; }
+
+    /* ──────────────────────────────────────────────
+       過渡
+       ────────────────────────────────────────────── */
+    .fade {
+      animation: fade .22s ease both;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 章節換墨（視角切換時用） */
+    .ink-shift {
+      animation: ink-shift .42s ease both;
+    }
+
+    @keyframes ink-shift {
+      0% { opacity: 1; }
+      40% { opacity: .15; }
+      100% { opacity: 1; }
+    }
+
+    /* ──────────────────────────────────────────────
+       響應式
+       ────────────────────────────────────────────── */
+    @media (min-width: 860px) {
+      .stage { padding: 40px; }
+
+      .prototype {
+        height: min(852px, calc(100vh - 80px));
+        box-shadow: var(--shadow), inset 0 0 0 1px rgba(239, 224, 196, .08);
+      }
+
+      /* 頂部刊頭 */
+      .stage::before {
+        content: "私誌 ／ Soulscribe ／ 卷一";
+        position: fixed;
+        top: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(180, 154, 104, .42);
+        font-family: var(--font-display);
+        font-size: 10.5px;
+        letter-spacing: .42em;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* 底部閉頁語 */
+      .stage::after {
+        content: "存於無聲之地";
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(180, 154, 104, .3);
+        font-family: var(--font-display);
+        font-size: 10px;
+        letter-spacing: .38em;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* 左右書脊容器（直接顯示，無需 JS） */
+      .spine {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+        font-family: var(--font-spine);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        letter-spacing: 0;
+        color: rgba(180, 154, 104, .46);
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+        line-height: 1;
+      }
+
+      .spine-left {
+        left: calc(50% - 320px);
+      }
+
+      .spine-right {
+        right: calc(50% - 320px);
+      }
+
+      /* 每組詞（一個英文 phrase） */
+      .spine-word {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+
+      /* 每個字母獨立一行 */
+      .spine-word b {
+        display: block;
+        font-weight: 400;
+        text-transform: uppercase;
+        height: 14px;
+        line-height: 14px;
+      }
+
+      /* 書脊裝飾金線：每組詞前後 */
+      .spine-word::before,
+      .spine-word::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 10px;
+        background: rgba(180, 154, 104, .28);
+        margin: 6px auto;
+      }
+    }
+
+    /* 中等屏幕（860–1100px）退化：不顯示書脊以免壓擠手機殼 */
+    @media (min-width: 860px) and (max-width: 1099px) {
+      .spine { display: none; }
+    }
+
+    /* 矮屏幕（高度 < 760px）：書脊也太擠，退化 */
+    @media (min-width: 1100px) and (max-height: 759px) {
+      .spine { display: none; }
+    }
+
+    @media (max-width: 380px) {
+      .quiet-screen { padding: 28px 22px 24px; }
+      h1 { font-size: 26px; }
+      h2 { font-size: 19px; }
+      .question { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <aside class="spine spine-left" aria-hidden="true">
+      <span class="spine-word">
+        <b>V</b><b>O</b><b>L</b><b>U</b><b>M</b><b>E</b>
+        <b>·</b>
+        <b>O</b><b>N</b><b>E</b>
+      </span>
+      <span class="spine-word">
+        <b>K</b><b>E</b><b>P</b><b>T</b>
+      </span>
+      <span class="spine-word">
+        <b>I</b><b>N</b>
+        <b>·</b>
+        <b>S</b><b>I</b><b>L</b><b>E</b><b>N</b><b>C</b><b>E</b>
+      </span>
+    </aside>
+
+    <div id="app" class="prototype relative" aria-live="polite"></div>
+
+    <aside class="spine spine-right" aria-hidden="true">
+      <span class="spine-word">
+        <b>S</b><b>O</b><b>U</b><b>L</b><b>S</b><b>C</b><b>R</b><b>I</b><b>B</b><b>E</b>
+      </span>
+      <span class="spine-word">
+        <b>P</b><b>R</b><b>I</b><b>V</b><b>A</b><b>T</b><b>E</b>
+      </span>
+      <span class="spine-word">
+        <b>A</b><b>R</b><b>C</b><b>H</b><b>I</b><b>V</b><b>E</b>
+      </span>
+    </aside>
+  </main>
+
+  <script>
+    // ──────────────────────────────────────────────
+    // 內容素材
+    // ──────────────────────────────────────────────
+    const responses = ["記下了。", "…", "。", "聽見了。", "；"];
+
+    const waitingLines = [
+      "稍等。",
+      "與我片刻。",
+      "正在讀你的記錄。"
+    ];
+
+    const quotes = [
+      "記憶是我們唯一真正擁有的財産。",
+      "往事從不消逝，它甚至從未過去。",
+      "只有寫下來的，才真正發生過。",
+      "我寫，故我在。",
+      "一個人能走多遠，取決於他敢對自己說多少真話。"
+    ];
+
+    const defaultRecords = [
+      {
+        text: "父親去世那年，我第一次真正明白，家裡有些事不是靠說理能解決的。",
+        layer: "D",
+        time: "今日"
+      },
+      {
+        text: "九十年代初那間小辦公室，窗戶朝西。下午四點以後，整面牆都是金色的灰。",
+        layer: "D",
+        time: "昨日"
+      },
+      {
+        text: "我當時沒有告訴任何人，那筆錢其實不是為了賺，是為了讓自己有退路。",
+        layer: "D",
+        time: "五月"
+      }
+    ];
+
+    const firstPersonChapter = [
+      "我不是一開始就知道自己會走到今天。最早的那些年，我只知道身後沒有退路。辦公室很小，窗戶朝西，下午四點以後，整面牆都是金色的灰。那時我常常站在窗前，手裡捏著一張欠條，心裡想的是明天怎麼過。",
+      "父親走後，家裡有些話再也沒有人敢說完整。我也學會了不把每件事講清楚。外人以為那是城府，其實很多時候，只是怕一開口，事情就再也收不回來。",
+      "那筆錢後來被人說成我的第一桶金。只有我自己知道，它一開始不是為了賺，是為了給自己留一條退路。人到某個年紀才明白，所謂成功，有時只是把當年最狼狽的一部分，藏得足夠深。"
+    ];
+
+    const thirdPersonChapter = [
+      "他並不是一開始就知道自己會走到今天。最早的那些年，他只知道身後沒有退路。辦公室很小，窗戶朝西，下午四點以後，整面牆都是金色的灰。那時他常常站在窗前，手裡捏著一張欠條，想的是明天怎麼過。",
+      "父親走後，家裡有些話再也沒有人敢說完整。他也從那時起學會了沉默。外人以為那是城府，其實很多時候，只是怕一開口，事情就再也收不回來。",
+      "那筆錢後來被人說成他的第一桶金。只有他自己知道，它一開始不是為了賺，是為了留一條退路。人到某個年紀才明白，所謂成功，有時只是把當年最狼狽的一部分，藏得足夠深。"
+    ];
+
+    // ──────────────────────────────────────────────
+    // 應用狀態
+    // ──────────────────────────────────────────────
+    const state = {
+      screen: "welcome",         // welcome | register | archaeology | archaeology-done | app
+      registerStep: 1,
+      archaeologyChoice: "",
+      tab: "record",             // record | chapters | capsule
+      mode: "guided",            // guided | free
+      records: defaultRecords.slice(),
+      responseIndex: 0,
+      chapterGenerated: false,   // 首次進入篇章 Tab，未生成
+      chapterGenerating: false,  // 生成中等待態
+      perspective: "first",
+      perspectiveTransition: false,
+      rewriteIndex: null,
+      capsuleLayer: "D",
+      advanced: false,
+      capsule50Year: false,
+      settingsOpen: false,
+      silent: false,
+      shareReady: false,
+      mainVersionMarked: false,
+      quoteIndex: 1,
+      deleteAllStage: 0          // 0: 一次確認 1: 二次確認
+    };
+
+    const app = document.getElementById("app");
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    // ──────────────────────────────────────────────
+    // 渲染
+    // ──────────────────────────────────────────────
+    function render() {
+      if (state.screen === "welcome") {
+        app.innerHTML = welcomeTemplate();
+      } else if (state.screen === "register") {
+        app.innerHTML = registerTemplate();
+      } else if (state.screen === "archaeology") {
+        app.innerHTML = archaeologyTemplate();
+      } else if (state.screen === "archaeology-done") {
+        app.innerHTML = archaeologyDoneTemplate();
+      } else {
+        app.innerHTML = appTemplate();
+      }
+      bindEvents();
+
+      // 自動聚焦表單第一個輸入
+      const firstInput = app.querySelector("input:not([type=hidden])") ||
+                         app.querySelector("textarea");
+      if (firstInput && state.screen !== "app") firstInput.focus();
+    }
+
+    function welcomeTemplate() {
+      return `
+        <section class="screen quiet-screen fade">
+          <div class="brandline">
+            <div class="brandmark">誌</div>
+            <small>Private Archive · Soulscribe</small>
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">私誌</p>
+            <h1>寫給自己。<br>存於無聲之地。</h1>
+            <p class="tagline">此處只記你願意留下的真話。</p>
+          </div>
+          <button class="primary" data-action="start">開始</button>
+        </section>
+      `;
+    }
+
+    function registerTemplate() {
+      const step = state.registerStep;
+      const body = step === 1 ? `
+        <div class="field">
+          <label for="identity">手機號或郵箱</label>
+          <input id="identity" autocomplete="username" placeholder="name@example.com" data-enter="next-register">
+        </div>
+        <button class="primary" data-action="next-register">繼續</button>
+      ` : step === 2 ? `
+        <div class="field">
+          <label for="password">密碼</label>
+          <input id="password" type="password" autocomplete="new-password" placeholder="至少八位" data-enter="next-register">
+        </div>
+        <button class="primary" data-action="next-register">繼續</button>
+      ` : `
+        <div class="stack">
+          <p class="notice">設定恢復暗語，妥存打印件。此鑰，只在你手中。</p>
+          <div class="key-box">SZ-7F4A-19C8-QING<br>LOCAL-KEY · NEVER SENT</div>
+          <div class="field">
+            <label for="recovery">恢復暗語</label>
+            <input id="recovery" placeholder="一句只有你知道的話" data-enter="finish-register">
+          </div>
+        </div>
+        <button class="primary" data-action="finish-register">妥存，繼續</button>
+      `;
+
+      return `
+        <section class="screen fade">
+          <div class="flow">
+            <div class="flow-head">
+              <div class="brandline">
+                <div class="brandmark">誌</div>
+                <small>建檔</small>
+              </div>
+              <div class="step-dots" aria-label="註冊進度">
+                <i class="${step >= 1 ? "active" : ""}"></i>
+                <i class="${step >= 2 ? "active" : ""}"></i>
+                <i class="${step >= 3 ? "active" : ""}"></i>
+              </div>
+              <h2>${step === 1 ? "先留下入口。" : step === 2 ? "由你設門。" : "鑰匙只在你手中。"}</h2>
+            </div>
+            <div class="stack">${body}</div>
+          </div>
+        </section>
+      `;
+    }
+
+    function archaeologyTemplate() {
+      if (!state.archaeologyChoice) {
+        return `
+          <section class="screen fade">
+            <div class="flow">
+              <div class="flow-head">
+                <div class="brandline">
+                  <div class="brandmark">誌</div>
+                  <small>聲音考古</small>
+                </div>
+                <h2>從哪裡開始都好。</h2>
+              </div>
+              <div class="choices">
+                <button class="choice" data-action="choose-archaeology" data-choice="near">
+                  <strong>一件近事</strong>
+                  <span>從最近仍在心上的一刻開始。</span>
+                </button>
+                <button class="choice" data-action="choose-archaeology" data-choice="old">
+                  <strong>一段舊憶</strong>
+                  <span>從多年前沒有散去的聲音開始。</span>
+                </button>
+                <button class="choice" data-action="choose-archaeology" data-choice="unsaid">
+                  <strong>一句未竟之言</strong>
+                  <span>從那句沒有說完的話開始。</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      const prompts = {
+        near: "這件事最先浮上來的是哪一刻？",
+        old: "那段舊憶裡，誰的聲音還在？",
+        unsaid: "那句話，原本想說給誰聽？"
+      };
+
+      return `
+        <section class="screen fade">
+          <div class="flow">
+            <div class="flow-head">
+              <div class="brandline">
+                <div class="brandmark">誌</div>
+                <button class="ghost" data-action="reset-archaeology" style="flex: 0 0 auto; padding: 4px 12px; min-height: 28px;">重選</button>
+              </div>
+              <div class="question">${prompts[state.archaeologyChoice]}</div>
+            </div>
+            <div class="stack">
+              <textarea id="archaeology-input" placeholder="片語、短句、停頓，都可以。"></textarea>
+              <p class="response ${state.silent ? "empty" : ""}">${state.silent ? "" : responses[state.responseIndex]}</p>
+              <div class="actions">
+                <button class="secondary" data-action="save-archaeology">繼續</button>
+                <button class="ghost" data-action="enter-free">自述</button>
+                <button class="ghost" data-action="enter-app">止於此</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function archaeologyDoneTemplate() {
+      return `
+        <section class="screen quiet-screen fade">
+          <div class="brandline">
+            <div class="brandmark">誌</div>
+            <small>已收進</small>
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">聲音考古</p>
+            <h1>聽見了。</h1>
+            <p class="tagline">你說的，已被記下。<br>之後，從容繼續。</p>
+          </div>
+          <button class="primary" data-action="enter-app">進入</button>
+        </section>
+      `;
+    }
+
+    function appTemplate() {
+      return `
+        <section class="screen fade">
+          <header class="app-top">
+            <div class="app-name">
+              <div class="brandmark">誌</div>
+              <div class="app-title">
+                <strong>私誌</strong>
+                <span>存於此，知於你。</span>
+              </div>
+            </div>
+            <button class="icon-button" aria-label="設定" data-action="open-settings">
+              <span class="icon icon-sliders" aria-hidden="true"><i></i><span></span><b></b><em></em></span>
+            </button>
+          </header>
+          <div class="content">
+            ${state.tab === "record" ? recordTab() :
+              state.tab === "chapters" ? chaptersTab() : capsuleTab()}
+          </div>
+          <nav class="bottom-nav" aria-label="主導航">
+            ${navButton("record", "記錄")}
+            ${navButton("chapters", "篇章")}
+            ${navButton("capsule", "時間膠囊")}
+          </nav>
+        </section>
+        ${state.settingsOpen ? settingsSheet() : ""}
+      `;
+    }
+
+    function navButton(tab, label) {
+      return `
+        <button class="tab ${state.tab === tab ? "active" : ""}" data-action="switch-tab" data-tab="${tab}">
+          <span class="mark" aria-hidden="true"></span>
+          <span>${label}</span>
+        </button>
+      `;
+    }
+
+    function recordTab() {
+      const question = "那天你沒有說出口的，是哪一句？";
+      return `
+        <div class="stack">
+          <div class="segmented" role="group" aria-label="輸入模式">
+            <button class="${state.mode === "guided" ? "active" : ""}" data-action="set-mode" data-mode="guided">引導</button>
+            <button class="${state.mode === "free" ? "active" : ""}" data-action="set-mode" data-mode="free">自述</button>
+            <span></span>
+          </div>
+
+          ${state.mode === "guided" ? `
+            <div class="prompt-line">
+              <div class="question">${question}</div>
+              <div class="actions">
+                <button class="ghost" data-action="cycle-response">繼續</button>
+                <button class="ghost" data-action="set-mode" data-mode="free">自述</button>
+                <button class="ghost" data-action="quiet-response">止於此</button>
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="input-dock">
+            <textarea id="record-input" placeholder="說幾個詞也可以。" data-enter="add-record"></textarea>
+            <div class="actions">
+              <button class="small-button voice-button" data-action="voice-draft">口述</button>
+              <button class="small-button" data-action="focus-write">書寫</button>
+              <button class="secondary" data-action="add-record">記下</button>
+            </div>
+          </div>
+
+          <p class="response ${state.silent ? "empty" : ""}">${state.silent ? "" : responses[state.responseIndex]}</p>
+
+          <div class="entry-list">
+            ${state.records.map((entry, index) => `
+              <article class="entry">
+                <p>${escapeHtml(entry.text)}</p>
+                <div class="entry-foot">
+                  <span>${entry.time}</span>
+                  <span>${entry.layer === "A" ? "現在可以看" : "只有我能看"}</span>
+                  <button class="small-button" data-action="delete-record" data-index="${index}">刪除</button>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function chaptersTab() {
+      const enough = state.records.length >= 3;
+      const chapter = state.perspective === "first" ? firstPersonChapter : thirdPersonChapter;
+      const transClass = state.perspectiveTransition ? "ink-shift" : "";
+
+      // 生成中等待態
+      if (state.chapterGenerating) {
+        return `
+          <div class="stack">
+            <div class="panel tint">
+              <div class="chapter-title">
+                <span class="meta">${state.records.length} 則記錄</span>
+                <h2>第一章 · 起家的前夜</h2>
+              </div>
+            </div>
+            <div class="waiting">
+              <p class="waiting-line">${waitingLines[state.responseIndex % waitingLines.length]}</p>
+              <p class="waiting-quote">${quotes[state.quoteIndex]}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="stack">
+          <div class="panel tint">
+            <div class="chapter-title">
+              <span class="meta">${state.records.length} 則記錄${state.mainVersionMarked ? " · 主版本" : ""}</span>
+              <h2>第一章 · 起家的前夜</h2>
+            </div>
+            ${state.chapterGenerated ? `<p class="quote">"${quotes[state.quoteIndex]}"</p>` : ""}
+          </div>
+
+          ${!state.chapterGenerated ? (
+            !enough ? `
+              <div class="chapter-empty">
+                <p class="meta">再說幾句，我會更懂你。</p>
+              </div>
+              <button class="primary" disabled>生成篇章</button>
+            ` : `
+              <button class="primary" data-action="generate-chapter">生成篇章</button>
+              <p class="meta" style="text-align: center;">已有 ${state.records.length} 則記錄，可以試生成。</p>
+            `
+          ) : `
+            <article class="chapter panel ${transClass}">
+              <div class="chapter-body">
+                ${chapter.map((text, index) => `
+                  <section class="paragraph">
+                    <p>${text}</p>
+                    ${state.rewriteIndex === index ? `
+                      <div class="stack" style="margin-top: 12px;">
+                        <input id="rewrite-input" placeholder="何處失真？" data-enter="apply-rewrite">
+                        <div class="actions">
+                          <button class="secondary" data-action="apply-rewrite">重寫</button>
+                          <button class="ghost" data-action="cancel-rewrite">取消</button>
+                        </div>
+                      </div>
+                    ` : `
+                      <button class="small-button" data-action="rewrite-paragraph" data-index="${index}">重寫這段</button>
+                    `}
+                  </section>
+                `).join("")}
+              </div>
+              <div class="chapter-actions">
+                <button class="ghost" data-action="toggle-perspective">${state.perspective === "first" ? "換作第三人稱讀" : "換回第一人稱"}</button>
+                <button class="${state.mainVersionMarked ? "secondary" : "ghost"}" data-action="mark-main">${state.mainVersionMarked ? "已標為主版本" : "標為主版本"}</button>
+              </div>
+            </article>
+          `}
+        </div>
+      `;
+    }
+
+    function capsuleTab() {
+      return `
+        <div class="stack">
+          <div class="panel tint">
+            <span class="meta">第一章 · 起家的前夜</span>
+            <h2 style="margin-top: 6px;">誰能讀到？</h2>
+          </div>
+
+          <div class="capsule-grid">
+            <button class="capsule-option ${state.capsuleLayer === "A" ? "active" : ""}" data-action="set-capsule" data-layer="A">
+              <strong>現在可以看</strong>
+              <span>生成給指定人的連結。</span>
+            </button>
+            <button class="capsule-option ${state.capsuleLayer === "D" ? "active" : ""}" data-action="set-capsule" data-layer="D">
+              <strong>只有我能看</strong>
+              <span>存於此，知於你。</span>
+            </button>
+          </div>
+
+          ${state.capsuleLayer === "A" ? `
+            <div class="panel stack">
+              <div class="field">
+                <label for="recipient">指定人</label>
+                <input id="recipient" placeholder="姓名或暗號">
+              </div>
+              <button class="secondary" data-action="make-share">生成連結</button>
+              ${state.shareReady ? `<p class="notice">連結已成：sizhi.app/share/7f4a</p>` : ""}
+            </div>
+          ` : `
+            <div class="panel">
+              <p class="notice">默認存於永久私密層。內容不進入分享流程。</p>
+            </div>
+          `}
+
+          <button class="ghost" data-action="toggle-advanced">${state.advanced ? "收起高級" : "高級"}</button>
+          ${state.advanced ? `
+            <div class="panel">
+              <div class="switch-row">
+                <div>
+                  <h3>五十年後公開</h3>
+                  <p class="meta">候時而出。</p>
+                </div>
+                <button class="switch ${state.capsule50Year ? "on" : ""}" data-action="toggle-50year" aria-pressed="${state.capsule50Year}" aria-label="五十年後公開"></button>
+              </div>
+              <p class="notice" style="margin-top: 10px;">${state.capsule50Year ? "屆時將以歷史材料形式公開，由未來世代見證。此功能尚在預備。" : "這意味著您的記錄將成爲歷史材料，由未來世代見證您的人生。"}</p>
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }
+
+    function settingsSheet() {
+      const deleteCopy = state.deleteAllStage === 0
+        ? "刪除即永失。確認？"
+        : "此操作不可逆。繼續？";
+      return `
+        <section class="sheet fade" aria-label="設定頁">
+          <header class="app-top">
+            <div class="app-title">
+              <strong>設定</strong>
+              <span>你可以決定，誰在何時讀到這些。候時而出。</span>
+            </div>
+            <button class="icon-button" aria-label="關閉設定" data-action="close-settings">
+              <span class="icon icon-close" aria-hidden="true"></span>
+            </button>
+          </header>
+          <div class="content">
+            <div class="stack">
+              <div class="panel">
+                <div class="switch-row">
+                  <div>
+                    <h3>默認模式</h3>
+                    <p class="meta">${state.mode === "guided" ? "引導" : "自述"}</p>
+                  </div>
+                  <button class="small-button" data-action="toggle-default-mode">${state.mode === "guided" ? "改為自述" : "改為引導"}</button>
+                </div>
+                <div class="switch-row">
+                  <div>
+                    <h3>系統回應</h3>
+                    <p class="meta">${state.silent ? "完全靜默" : "有回應"}</p>
+                  </div>
+                  <button class="small-button" data-action="toggle-silent">${state.silent ? "有回應" : "完全靜默"}</button>
+                </div>
+              </div>
+              <div class="panel stack">
+                <button class="ghost">修改密碼</button>
+                <button class="ghost">修改加密密鑰</button>
+                <button class="secondary">導出所有內容</button>
+              </div>
+              <div class="panel stack">
+                <button class="danger" data-action="delete-all-step">${state.deleteAllStage === 0 ? "刪除全部記錄" : "確認刪除"}</button>
+                <p class="meta">${deleteCopy}</p>
+                ${state.deleteAllStage === 1 ? `<button class="ghost" data-action="cancel-delete-all">取消</button>` : ""}
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    // ──────────────────────────────────────────────
+    // 事件
+    // ──────────────────────────────────────────────
+    function bindEvents() {
+      app.querySelectorAll("[data-action]").forEach((node) => {
+        node.addEventListener("click", handleAction);
+      });
+      // Enter 鍵流轉
+      app.querySelectorAll("[data-enter]").forEach((node) => {
+        node.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            // 對 textarea 而言：Shift+Enter 才是換行，純 Enter 提交
+            if (node.tagName === "TEXTAREA" && !event.metaKey && !event.ctrlKey) {
+              // textarea 默認讓 Enter 換行；要"純 Enter 提交"在 textarea 上會傷害寫作
+              // 故 textarea 走 Ctrl/Cmd+Enter 提交
+              return;
+            }
+            event.preventDefault();
+            const synthetic = { currentTarget: { dataset: { action: node.dataset.enter } } };
+            handleAction(synthetic);
+          }
+          if (event.key === "Enter" && (event.metaKey || event.ctrlKey) && node.tagName === "TEXTAREA") {
+            event.preventDefault();
+            const synthetic = { currentTarget: { dataset: { action: node.dataset.enter } } };
+            handleAction(synthetic);
+          }
+        });
+      });
+    }
+
+    function handleAction(event) {
+      const action = event.currentTarget.dataset.action;
+      const target = event.currentTarget;
+
+      switch (action) {
+        case "start":
+          state.screen = "register";
+          break;
+
+        case "next-register":
+          state.registerStep = Math.min(3, state.registerStep + 1);
+          break;
+
+        case "finish-register":
+          state.screen = "archaeology";
+          break;
+
+        case "choose-archaeology":
+          state.archaeologyChoice = target.dataset.choice;
+          break;
+
+        case "reset-archaeology":
+          state.archaeologyChoice = "";
+          break;
+
+        case "save-archaeology": {
+          const input = document.getElementById("archaeology-input");
+          const text = input && input.value.trim()
+            ? input.value.trim()
+            : "我還不知道從哪裡說起，但這件事一直在。";
+          state.records.unshift({ text, layer: "D", time: "剛剛" });
+          state.responseIndex = (state.responseIndex + 1) % responses.length;
+          // 切到 "已收進" 過渡頁，再進主應用
+          state.screen = "archaeology-done";
+          break;
+        }
+
+        case "enter-free":
+          state.screen = "app";
+          state.mode = "free";
+          break;
+
+        case "enter-app":
+          state.screen = "app";
+          break;
+
+        case "switch-tab":
+          state.tab = target.dataset.tab;
+          state.rewriteIndex = null;
+          break;
+
+        case "set-mode":
+          state.mode = target.dataset.mode;
+          break;
+
+        case "cycle-response":
+          state.responseIndex = (state.responseIndex + 1) % responses.length;
+          break;
+
+        case "quiet-response":
+          state.silent = true;
+          break;
+
+        case "voice-draft": {
+          const input = document.getElementById("record-input");
+          if (input) {
+            input.value = "那天晚上，我其實已經決定不回頭。";
+            input.focus();
+          }
+          target.classList.add("listening");
+          target.textContent = "已轉文字";
+          return;  // 不重新 render，保持按鈕狀態與光標
+        }
+
+        case "focus-write": {
+          const input = document.getElementById("record-input");
+          if (input) input.focus();
+          return;
+        }
+
+        case "add-record": {
+          const input = document.getElementById("record-input");
+          const text = input && input.value.trim()
+            ? input.value.trim()
+            : "有些話，先放在這裡。";
+          state.records.unshift({ text, layer: "D", time: "剛剛" });
+          state.responseIndex = (state.responseIndex + 1) % responses.length;
+          break;
+        }
+
+        case "delete-record":
+          state.records.splice(Number(target.dataset.index), 1);
+          break;
+
+        case "generate-chapter":
+          // 進入等待態，1.6s 後展開篇章
+          state.chapterGenerating = true;
+          state.quoteIndex = (state.quoteIndex + 1) % quotes.length;
+          render();
+          setTimeout(() => {
+            state.chapterGenerating = false;
+            state.chapterGenerated = true;
+            render();
+          }, 1600);
+          return;
+
+        case "toggle-perspective":
+          state.perspectiveTransition = true;
+          render();
+          setTimeout(() => {
+            state.perspective = state.perspective === "first" ? "third" : "first";
+            state.perspectiveTransition = false;
+            render();
+          }, 220);
+          return;
+
+        case "rewrite-paragraph":
+          state.rewriteIndex = Number(target.dataset.index);
+          break;
+
+        case "cancel-rewrite":
+        case "apply-rewrite":
+          state.rewriteIndex = null;
+          break;
+
+        case "mark-main":
+          state.mainVersionMarked = !state.mainVersionMarked;
+          break;
+
+        case "set-capsule":
+          state.capsuleLayer = target.dataset.layer;
+          state.shareReady = false;
+          break;
+
+        case "make-share":
+          state.shareReady = true;
+          break;
+
+        case "toggle-advanced":
+          state.advanced = !state.advanced;
+          break;
+
+        case "toggle-50year":
+          state.capsule50Year = !state.capsule50Year;
+          break;
+
+        case "open-settings":
+          state.settingsOpen = true;
+          state.deleteAllStage = 0;
+          break;
+
+        case "close-settings":
+          state.settingsOpen = false;
+          state.deleteAllStage = 0;
+          break;
+
+        case "toggle-default-mode":
+          state.mode = state.mode === "guided" ? "free" : "guided";
+          break;
+
+        case "toggle-silent":
+          state.silent = !state.silent;
+          break;
+
+        case "delete-all-step":
+          if (state.deleteAllStage === 0) {
+            state.deleteAllStage = 1;
+          } else {
+            state.records = [];
+            state.chapterGenerated = false;
+            state.mainVersionMarked = false;
+            state.settingsOpen = false;
+            state.deleteAllStage = 0;
+            state.tab = "record";
+          }
+          break;
+
+        case "cancel-delete-all":
+          state.deleteAllStage = 0;
+          break;
+      }
+
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
